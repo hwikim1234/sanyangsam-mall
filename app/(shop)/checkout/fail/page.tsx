@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 
 export default function CheckoutFailPage({ searchParams }: { searchParams: { code?: string; message?: string } }) {
