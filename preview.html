@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>지리산 산양삼 직거래몰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g1:#1b4332;--g2:#2d6a4f;--g3:#40916c;--g4:#d8f3dc;
+  --gold:#a67c2e;--gold-light:#f9f0dc;
+  --ink:#111827;--gray:#6b7280;--light:#f9fafb;--white:#fff;
+  --border:#e5e7eb;--radius:12px;
+  --shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);background:#f6f5f0}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit;cursor:pointer}
+button{cursor:pointer;font-family:inherit}
+
+/* 데모 탭 */
+#demobar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#111;display:flex;align-items:center;gap:4px;padding:0 12px;height:42px;overflow-x:auto;scrollbar-width:none}
+#demobar::-webkit-scrollbar{display:none}
+#demobar strong{color:var(--gold);font-size:12px;margin-right:6px;white-space:nowrap}
+#demobar button{background:none;border:1px solid #333;color:#aaa;padding:4px 11px;border-radius:20px;font-size:11px;white-space:nowrap;transition:.15s}
+#demobar button:hover{border-color:#666;color:#fff}
+#demobar button.on{background:var(--g2);border-color:var(--g2);color:#fff}
+
+.pg{display:none;padding-top:42px;min-height:100vh}
+.pg.on{display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* 헤더 */
+.hd{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:100}
+.hd-in{height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo b{display:block;font-size:20px;font-weight:900;color:var(--g1);letter-spacing:-.5px}
+.logo small{font-size:10px;color:var(--gold);font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.gnb{display:flex;gap:28px}
+.gnb a{font-size:14px;font-weight:500;color:#374151;transition:.15s}
+.gnb a:hover,.gnb a.on{color:var(--g2)}
+.hd-right{display:flex;gap:10px;align-items:center}
+.btn-cart{display:flex;align-items:center;gap:6px;background:var(--g2);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;border:none}
+.badge{background:var(--gold);border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.btn-login{font-size:13px;color:#374151;font-weight:500;background:none;border:1px solid var(--border);padding:8px 14px;border-radius:8px}
+
+/* 공통 버튼 */
+.btn-p{background:var(--g2);color:#fff;border:none;padding:13px 28px;border-radius:8px;font-weight:700;font-size:15px;display:inline-block}
+.btn-o{border:2px solid var(--g2);color:var(--g2);background:#fff;padding:11px 26px;border-radius:8px;font-weight:700;font-size:15px;display:inline-block;border-style:solid}
+.btn-w{border:2px solid #fff;color:#fff;background:transparent;padding:11px 26px;border-radius:8px;font-weight:700;font-size:15px;display:inline-block;border-style:solid}
+
+/* 섹션 */
+.sec{padding:64px 0}
+.sec-tit{text-align:center;margin-bottom:40px}
+.sec-tit .tag{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.sec-tit h2{font-size:28px;font-weight:900;color:var(--ink)}
+.sec-tit .bar{width:36px;height:3px;background:var(--gold);border-radius:2px;margin:10px auto 0}
+
+/* 히어로 */
+.hero{position:relative;height:560px;overflow:hidden;background:var(--g1)}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center center;opacity:.7}
+.hero-overlay{position:absolute;inset:0;display:flex;align-items:center;padding:0 80px}
+.hero-txt .eyebrow{font-size:12px;letter-spacing:3px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.hero-txt h1{font-size:54px;font-weight:900;line-height:1.1;color:#fff;letter-spacing:-1px;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.hero-txt p{font-size:16px;color:rgba(255,255,255,.85);margin-top:16px;line-height:1.7}
+.hero-btns{margin-top:28px;display:flex;gap:12px}
+.hero-badge{position:absolute;right:80px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:20px 24px;color:#fff;text-align:center;min-width:180px}
+.hero-badge .num{font-size:42px;font-weight:900;color:var(--gold);line-height:1}
+.hero-badge .unit{font-size:13px;margin-top:4px;opacity:.8}
+
+/* 트러스트 */
+.trust{background:var(--g2);color:#fff;padding:14px 0}
+.trust-list{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.trust-item{font-size:13px;font-weight:600}
+
+/* 상품 */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:box-shadow .2s,transform .2s}
+.pcard:hover{box-shadow:0 12px 32px rgba(0,0,0,.1);transform:translateY(-2px)}
+.pcard-thumb{position:relative;height:230px;overflow:hidden}
+.pcard-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.pcard:hover .pcard-thumb img{transform:scale(1.04)}
+.pcard-badge{position:absolute;top:10px;left:10px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px}
+.pcard-body{padding:16px}
+.pcard-body h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.pcard-body p{font-size:12px;color:var(--gray);margin-bottom:12px}
+.price-row{display:flex;align-items:baseline;gap:7px}
+.price-sale{font-size:22px;font-weight:900;color:var(--g2)}
+.price-orig{font-size:13px;color:#9ca3af;text-decoration:line-through}
+.price-rate{font-size:13px;font-weight:700;color:#ef4444}
+.pcard-foot{padding:12px 16px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pcard-foot button{padding:9px;border-radius:7px;font-size:13px;font-weight:700;border:none}
+.btn-os{border:1.5px solid var(--g2)!important;background:#fff;color:var(--g2)}
+.btn-fs{background:var(--g2);color:#fff}
+
+/* 농장 소개 */
+.intro-strip{background:#fff}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.intro-text .eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.intro-text h2{font-size:30px;font-weight:900;line-height:1.3;margin-bottom:20px}
+.intro-text h2 em{color:var(--g2);font-style:normal}
+.intro-text p{font-size:15px;color:#4b5563;line-height:1.9;margin-bottom:10px}
+.intro-text .sig{font-weight:700;font-size:15px;margin-top:16px;color:var(--ink)}
+.intro-img{border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.intro-img img{width:100%;height:auto;display:block}
+
+/* 특징 */
+.feat-bg{background:var(--light)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{background:#fff;border-radius:var(--radius);padding:28px 22px;border:1px solid var(--border);text-align:center}
+.feat-icon{font-size:38px;margin-bottom:12px}
+.feat-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:13px;color:var(--gray);line-height:1.7}
+
+/* 인증 */
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.cert-img-box{border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.cert-list{display:flex;flex-direction:column;gap:14px}
+.cert-item{background:var(--light);border-radius:12px;padding:18px;display:flex;gap:14px;align-items:flex-start;border:1px solid var(--border)}
+.cert-ico{width:44px;height:44px;background:var(--g2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.cert-item h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.cert-item p{font-size:13px;color:var(--gray)}
+
+/* 푸터 */
+.footer{background:#111;color:#9ca3af;padding:36px 0}
+.footer-in{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.footer-in p{font-size:13px;line-height:1.9;margin-bottom:1px}
+.footer-phone{text-align:right}
+.footer-phone strong{font-size:30px;color:#fff;display:block;font-weight:900}
+.footer-phone .bank{font-size:13px;color:#6ee7b7;margin-top:4px}
+
+/* 페이지 상단 */
+.page-top{background:var(--g1);color:#fff;padding:32px 0}
+.page-top h1{font-size:26px;font-weight:900}
+.page-top p{font-size:14px;opacity:.7;margin-top:4px}
+.breadcrumb-light{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:8px}
+
+/* 상품 상세 */
+.detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.gallery-main{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.gallery-main img{width:100%;height:420px;object-fit:cover}
+.g-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.g-thumb{border-radius:8px;overflow:hidden;border:2px solid transparent;cursor:pointer}
+.g-thumb.on{border-color:var(--g2)}
+.g-thumb img{width:100%;height:74px;object-fit:cover}
+.detail-info .eyebrow{font-size:12px;color:var(--gray);margin-bottom:8px}
+.detail-info h1{font-size:21px;font-weight:900;line-height:1.4;margin-bottom:10px}
+.cert-tag{display:inline-block;background:#f0fdf4;border:1px solid #86efac;color:#166534;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:16px}
+.price-box{background:var(--light);border-radius:10px;padding:18px;margin-bottom:20px}
+.price-box .big{font-size:34px;font-weight:900;color:var(--g2)}
+.price-box .orig{font-size:16px;color:#9ca3af;text-decoration:line-through;margin-left:8px}
+.price-box .disc{background:#fef2f2;color:#dc2626;font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;margin-left:6px}
+.price-box .ship{font-size:13px;color:var(--g2);font-weight:600;margin-top:7px}
+.opt-row{margin-bottom:16px}
+.opt-row label{font-size:13px;font-weight:700;display:block;margin-bottom:8px}
+.opt-btns{display:flex;gap:8px;flex-wrap:wrap}
+.opt-btn{border:1.5px solid var(--border);background:#fff;padding:9px 16px;border-radius:8px;font-size:14px;font-weight:500;transition:.15s}
+.opt-btn.on{border-color:var(--g2);background:#f0fdf4;color:var(--g2);font-weight:700}
+.qty-wrap{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.qty-wrap label{font-size:13px;font-weight:700}
+.qty-ctrl{display:flex;align-items:center;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.qty-ctrl button{background:#f9fafb;border:none;padding:9px 15px;font-size:18px}
+.qty-ctrl span{padding:9px 18px;font-weight:700;font-size:16px}
+.spec-tbl{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:20px}
+.spec-tbl th{width:110px;background:#f9fafb;padding:10px 12px;border:1px solid var(--border);font-weight:600;text-align:left;vertical-align:top}
+.spec-tbl td{padding:10px 12px;border:1px solid var(--border);line-height:1.6}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-cart-big{border:2px solid var(--g2);background:#fff;color:var(--g2);padding:15px;border-radius:10px;font-weight:700;font-size:15px;border-style:solid}
+.btn-buy-big{background:var(--g2);color:#fff;border:none;padding:15px;border-radius:10px;font-weight:700;font-size:15px}
+
+/* 탭 */
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-top:56px}
+.tab-btn{padding:14px 22px;background:none;border:none;font-size:15px;font-weight:600;color:var(--gray);border-bottom:3px solid transparent;margin-bottom:-2px;transition:.15s}
+.tab-btn.on{color:var(--g2);border-bottom-color:var(--g2)}
+.tab-pane{display:none;padding:28px 0}
+.tab-pane.on{display:block}
+.desc-imgs{display:flex;flex-direction:column;gap:0}
+.desc-imgs img{width:100%;max-width:720px;margin:0 auto}
+.review-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
+.review-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.stars{color:#fbbf24}
+
+/* 농장 소개 */
+.about-hero{position:relative;height:380px;overflow:hidden;background:var(--g1)}
+.about-hero img{width:100%;height:100%;object-fit:cover;opacity:.55}
+.about-hero-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center}
+.about-hero-txt h1{font-size:44px;font-weight:900}
+.about-hero-txt p{font-size:16px;margin-top:8px;opacity:.8}
+.farm-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.farm-photo{border-radius:var(--radius);overflow:hidden}
+.farm-photo img{width:100%;height:200px;object-fit:cover}
+.farm-photo p{text-align:center;font-size:13px;color:#4b5563;padding:10px;background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius)}
+
+/* 장바구니 */
+.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start}
+.cart-item{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:20px;display:flex;gap:16px;margin-bottom:12px}
+.cart-img{width:90px;height:90px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.cart-price{font-size:20px;font-weight:900;color:var(--g2)}
+.summary-box{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:24px;position:sticky;top:120px}
+.summary-box h3{font-size:17px;font-weight:700;margin-bottom:18px}
+.s-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}
+.s-total{display:flex;justify-content:space-between;font-size:18px;font-weight:900;border-top:1px solid var(--border);padding-top:14px;margin-top:6px}
+.ship-bar{background:#f0fdf4;border-radius:8px;padding:12px;font-size:13px;color:var(--g2);font-weight:600;margin:14px 0}
+.btn-checkout{width:100%;background:var(--g2);color:#fff;border:none;padding:16px;border-radius:10px;font-size:16px;font-weight:700;margin-top:12px}
+
+/* 결제 */
+.checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+.form-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:24px;margin-bottom:16px}
+.form-card h3{font-size:15px;font-weight:700;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.f-grp{margin-bottom:12px}
+.f-grp label{font-size:12px;font-weight:700;display:block;margin-bottom:5px;color:#374151}
+.f-grp input,.f-grp select{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none}
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pay-btn{border:2px solid var(--border);background:#fff;border-radius:10px;padding:14px 8px;text-align:center;font-size:13px;font-weight:600;border-style:solid}
+.pay-btn.on{border-color:var(--g2);background:#f0fdf4;color:var(--g2)}
+.bank-box{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:18px;margin-top:14px;border-style:solid}
+.bank-box h4{font-size:13px;font-weight:700;margin-bottom:10px;color:#92400e}
+.bank-box p{font-size:14px;margin-bottom:4px}
+.bank-box strong{font-size:18px;color:var(--g1)}
+
+/* 주문완료 */
+.success-wrap{max-width:520px;margin:60px auto}
+.success-card{background:#fff;border-radius:20px;border:1px solid var(--border);padding:44px;box-shadow:var(--shadow);text-align:center}
+.success-icon{font-size:60px;margin-bottom:16px}
+.success-card h2{font-size:24px;font-weight:900;margin-bottom:8px}
+.order-num{background:var(--light);border-radius:8px;padding:14px;font-family:monospace;font-size:18px;font-weight:700;margin:16px 0}
+.deadline{background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;font-size:13px;color:#dc2626;margin-bottom:16px;line-height:1.6;border-style:solid}
+.bank-result{background:#f0fdf4;border:2px solid var(--g2);border-radius:14px;padding:22px;text-align:left;margin-bottom:20px;border-style:solid}
+.bank-result h4{font-size:14px;font-weight:700;color:var(--g2);margin-bottom:12px}
+.br-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #bbf7d0;font-size:14px}
+.br-total{font-size:18px;font-weight:900;color:var(--g2);padding-top:12px;display:flex;justify-content:space-between}
+
+/* 문의 */
+.inquiry-header{background:var(--light);border-radius:var(--radius);padding:32px;text-align:center;margin-bottom:24px;border:1px solid var(--border)}
+.inquiry-list{background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
+.iq-item{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer}
+.iq-item:last-child{border-bottom:none}
+.iq-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.iq-answered{background:#f0fdf4;color:#16a34a}
+.iq-pending{background:#fef2f2;color:#dc2626}
+.iq-new{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:24px}
+
+/* 로그인 */
+.login-wrap{max-width:420px;margin:60px auto}
+.login-card{background:#fff;border-radius:20px;border:1px solid var(--border);padding:44px;box-shadow:var(--shadow)}
+.login-card h2{font-size:24px;font-weight:900;margin-bottom:4px}
+.inp{width:100%;border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px}
+.btn-login-btn{width:100%;background:var(--g2);color:#fff;border:none;padding:14px;border-radius:8px;font-size:16px;font-weight:700}
+.or-line{text-align:center;position:relative;margin:18px 0;font-size:13px;color:var(--gray)}
+.or-line::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)}
+.or-line span{background:#fff;position:relative;padding:0 12px}
+.sns-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-kakao{background:#fee500;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700}
+.btn-naver{background:#03c75a;color:#fff;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700}
+
+/* 관리자 */
+.admin-wrap{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 84px)}
+.sidebar{background:var(--g1);color:#fff;padding:24px 0}
+.sidebar-logo{padding:0 20px 22px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:12px}
+.sidebar-logo span{font-size:15px;font-weight:700}
+.sidebar-logo small{display:block;font-size:11px;opacity:.4;margin-top:2px}
+.s-nav-item{padding:12px 20px;font-size:14px;display:flex;align-items:center;gap:10px;transition:.15s;cursor:pointer}
+.s-nav-item:hover,.s-nav-item.on{background:rgba(255,255,255,.1)}
+.s-badge{background:#ef4444;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:auto}
+.admin-main{background:#f6f5f0;padding:28px}
+.admin-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.admin-hd h1{font-size:22px;font-weight:900}
+.alert-box{background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:14px 18px;margin-bottom:22px;display:flex;align-items:center;gap:12px;font-size:14px;color:#dc2626}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);padding:20px}
+.stat-card p{font-size:12px;color:var(--gray);margin-bottom:4px;font-weight:500}
+.stat-card h3{font-size:28px;font-weight:900}
+.stat-card .tr{font-size:12px;color:#10b981;margin-top:4px}
+.stat-card .tr.red{color:#ef4444}
+.tbl-card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.tbl-hd{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.tbl-hd h3{font-size:15px;font-weight:700}
+.a-tbl{width:100%;border-collapse:collapse}
+.a-tbl th{background:#f9fafb;padding:11px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--gray);border-bottom:1px solid var(--border)}
+.a-tbl td{padding:13px 16px;font-size:13px;border-bottom:1px solid var(--border)}
+.a-tbl tr:last-child td{border-bottom:none}
+.sb{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.sb-wait{background:#fffbeb;color:#b45309}
+.sb-ok{background:#f0fdf4;color:#16a34a}
+.sb-ship{background:#eff6ff;color:#1d4ed8}
+.btn-cfm{background:var(--gold);color:#fff;border:none;padding:6px 13px;border-radius:6px;font-size:12px;font-weight:700}
+.btn-shp{background:var(--g2);color:#fff;border:none;padding:6px 13px;border-radius:6px;font-size:12px;font-weight:700}
+
+@media(max-width:900px){
+  .hero{height:400px}.hero-overlay{padding:0 24px}.hero-txt h1{font-size:36px}.hero-badge{display:none}
+  .prod-grid,.feat-grid,.farm-photo-grid,.stat-grid{grid-template-columns:1fr 1fr}
+  .intro-grid,.detail-layout,.cert-grid,.cart-layout,.checkout-layout{grid-template-columns:1fr}
+  .gnb,.btn-login{display:none}
+  .footer-in{grid-template-columns:1fr}.footer-phone{text-align:left}
+}
+@media(max-width:600px){
+  .prod-grid,.feat-grid,.farm-photo-grid,.stat-grid,.sns-row{grid-template-columns:1fr}
+  .hero-txt h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<nav id="demobar">
+  <strong>📱 미리보기</strong>
+  <button onclick="go('home')" id="t-home" class="on">🏠 홈</button>
+  <button onclick="go('products')" id="t-products">📦 상품목록</button>
+  <button onclick="go('detail')" id="t-detail">🔍 상품상세</button>
+  <button onclick="go('about')" id="t-about">🌿 농장소개</button>
+  <button onclick="go('cart')" id="t-cart">🛒 장바구니</button>
+  <button onclick="go('checkout')" id="t-checkout">💳 주문결제</button>
+  <button onclick="go('success')" id="t-success">✅ 주문완료</button>
+  <button onclick="go('inquiry')" id="t-inquiry">💬 고객문의</button>
+  <button onclick="go('login')" id="t-login">🔐 로그인</button>
+  <button onclick="go('admin')" id="t-admin">⚙️ 관리자</button>
+</nav>
+
+<script>
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#demobar button').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.getElementById('t-'+id).classList.add('on');
+  window.scrollTo(0,0);
+}
+function selOpt(el){el.closest('.opt-btns').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
+function selPay(el){
+  document.querySelectorAll('.pay-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  document.getElementById('bank-info').style.display=el.dataset.m==='bank'?'block':'none';
+}
+function switchImg(el,src){document.querySelectorAll('.g-thumb').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('gMain').src=src}
+function switchTab(id){document.querySelectorAll('.tab-btn,.tab-pane').forEach(x=>x.classList.remove('on'));document.getElementById('tb-'+id).classList.add('on');document.getElementById('tp-'+id).classList.add('on')}
+</script>
+
+<!-- ═══ 홈 ═══ -->
+<div id="home" class="pg on">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')" class="on">홈</a><a onclick="go('products')">상품</a><a onclick="go('about')">농장소개</a><a onclick="go('inquiry')">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 장바구니 <span class="badge">1</span></button></div>
+</div></header>
+
+<section class="hero">
+  <img class="hero-img" src="./public/images/products/product-roots-1.jpg" alt="지리산 산양삼"/>
+  <div class="hero-overlay">
+    <div class="hero-txt">
+      <p class="eyebrow">Jirisan · Altitude 800m · 5–6 Years Grown</p>
+      <h1>지리산 해발 800m<br/>산양삼 직거래</h1>
+      <p>화학 농약 무사용 · 한국임업진흥원 국내산·무농약 인증<br/>농장주 이금팔이 직접 키우고 직접 보내드립니다</p>
+      <div class="hero-btns">
+        <a class="btn-p" onclick="go('products')">지금 주문하기</a>
+        <a class="btn-w" onclick="go('about')">농장 소개</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="num">118배</div>
+    <div class="unit">인삼 대비 진세노사이드</div>
+  </div>
+</section>
+
+<div class="trust"><div class="wrap">
+  <div class="trust-list">
+    <div class="trust-item">📜 한국임업진흥원 인증</div>
+    <div class="trust-item">🚫 100% 무농약</div>
+    <div class="trust-item">🏔️ 지리산 해발 800m</div>
+    <div class="trust-item">📦 농가 직접 발송</div>
+    <div class="trust-item">⭐ 1,000명+ 단골 고객</div>
+  </div>
+</div></div>
+
+<section class="sec"><div class="wrap">
+  <div class="sec-tit"><p class="tag">Best Products</p><h2>대표 상품</h2><div class="bar"></div></div>
+  <div class="prod-grid">
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-product-comparison.png" alt="10뿌리"/><span class="pcard-badge">베스트</span></div><div class="pcard-body"><h3>산양삼 5-6년근 10뿌리</h3><p>지리산 자연재배 · 무농약 인증 · 직송</p><div class="price-row"><span class="price-sale">49,800원</span><span class="price-orig">60,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-product-detail.png" alt="15뿌리"/><span class="pcard-badge" style="background:#1d4ed8">인기</span></div><div class="pcard-body"><h3>산양삼 5-6년근 15뿌리</h3><p>지리산 자연재배 · 무농약 인증 · 직송</p><div class="price-row"><span class="price-sale">67,800원</span><span class="price-orig">82,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-packaging.png" alt="20뿌리"/></div><div class="pcard-body"><h3>산양삼 5-6년근 20뿌리</h3><p>지리산 자연재배 · 무농약 인증 · 직송</p><div class="price-row"><span class="price-sale">89,800원</span><span class="price-orig">108,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+  </div>
+</div></section>
+
+<!-- 이벤트 배너 -->
+<div style="background:var(--g1);padding:44px 20px;text-align:center;color:#fff">
+  <div class="wrap">
+    <p style="font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:10px">LIMITED EVENT</p>
+    <h2 style="font-size:28px;font-weight:900;margin-bottom:20px">너무 감사해서 또 이벤트합니다!</h2>
+    <div style="display:inline-flex;gap:24px;background:rgba(255,255,255,.1);border-radius:12px;padding:16px 32px;flex-wrap:wrap;justify-content:center;margin-bottom:24px">
+      <span style="font-size:14px;font-weight:600">10뿌리 주문 → <b style="color:var(--gold);font-size:18px">2뿌리</b> 추가</span>
+      <span style="font-size:14px;font-weight:600">15뿌리 주문 → <b style="color:var(--gold);font-size:18px">3뿌리</b> 추가</span>
+      <span style="font-size:14px;font-weight:600">20뿌리 주문 → <b style="color:var(--gold);font-size:18px">4뿌리</b> 추가</span>
+    </div><br/>
+    <a class="btn-p" onclick="go('products')" style="font-size:16px;padding:15px 36px">지금 주문하기 →</a>
+  </div>
+</div>
+
+<!-- 농장 소개 -->
+<section class="sec intro-strip"><div class="wrap">
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p class="eyebrow">Farm Story</p>
+      <h2>안녕하세요,<br/>농장주 <em>이금팔</em>입니다.</h2>
+      <p>지리산 해발 800m의 청정 자연에서 산양삼을 재배한 지 10여 년이 넘었습니다. 처음 시작할 때의 마음 그대로 정직하고 정성스럽게 키우고 있습니다.</p>
+      <p>화학 농약과 비료를 전혀 사용하지 않고, 한국임업진흥원 국내산·무농약 합격증을 보유한 공인된 농장입니다.</p>
+      <p class="sig">— 지리산 산양삼 농장주 이금팔 드림</p>
+      <div style="margin-top:24px"><a class="btn-p" onclick="go('about')">농장 자세히 보기</a></div>
+    </div>
+    <div class="intro-img"><img src="./public/images/products/new-farmer-intro.png" alt="농장주 이금팔"/></div>
+  </div>
+</div></section>
+
+<!-- 특징 -->
+<section class="sec feat-bg"><div class="wrap">
+  <div class="sec-tit"><p class="tag">Why Choose Us</p><h2>저희 농장의 특징</h2><div class="bar"></div></div>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon">🏔️</div><h3>지리산 해발 800m</h3><p>맑은 공기와 일교차가 큰 고지대에서 자연 그대로 재배합니다.</p></div>
+    <div class="feat-card"><div class="feat-icon">🌱</div><h3>5~6년 자연 재배</h3><p>최소 5년 이상 충분히 자란 후 선별하여 수확합니다.</p></div>
+    <div class="feat-card"><div class="feat-icon">📜</div><h3>임업진흥원 인증</h3><p>국내산·무농약 합격증을 보유한 공인 농장입니다.</p></div>
+    <div class="feat-card"><div class="feat-icon">🚫</div><h3>100% 무농약</h3><p>화학 농약 및 비료를 전혀 사용하지 않습니다.</p></div>
+    <div class="feat-card"><div class="feat-icon">📦</div><h3>농장 직송</h3><p>중간 유통 없이 농장에서 고객님께 직접 발송합니다.</p></div>
+    <div class="feat-card"><div class="feat-icon">💯</div><h3>정직한 포장</h3><p>고객님이 보시는 그대로 직접 선별·포장하여 발송합니다.</p></div>
+  </div>
+</div></section>
+
+<!-- 추천 대상 -->
+<section class="sec" style="background:#fff"><div class="wrap">
+  <div class="sec-tit"><p class="tag">Recommended For</p><h2>이런 분들께 추천드려요</h2><div class="bar"></div></div>
+  <div style="max-width:680px;margin:0 auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)">
+    <img src="./public/images/products/new-recommend.png" alt="추천" style="width:100%"/>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="wrap"><div class="footer-in">
+  <div>
+    <p>상호: 지리산 산양삼 농장 | 대표: 이금팔</p>
+    <p>주소: 경상남도 하동군 화개면 지리산 일대</p>
+    <p>통신판매업신고: 2026-경남-00000</p>
+    <p style="margin-top:8px;font-size:12px">© 2026 지리산 산양삼 직거래몰. All rights reserved.</p>
+  </div>
+  <div class="footer-phone">
+    <strong>010-7129-3244</strong>
+    <p class="bank">국민은행 123456-78-901234 (이금팔)</p>
+    <p style="font-size:12px;margin-top:6px">평일 09:00~18:00 | 주말·공휴일 휴무</p>
+  </div>
+</div></div></footer>
+</div>
+
+<!-- ═══ 상품목록 ═══ -->
+<div id="products" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')">홈</a><a onclick="go('products')" class="on">상품</a><a onclick="go('about')">농장소개</a><a onclick="go('inquiry')">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button></div>
+</div></header>
+<div class="page-top"><div class="wrap"><p class="breadcrumb-light">홈 › 전체 상품</p><h1>전체 상품</h1><p>지리산 해발 800m 무농약 산양삼, 농장 직송</p></div></div>
+<section class="sec"><div class="wrap">
+  <div class="prod-grid">
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-product-comparison.png" alt=""/><span class="pcard-badge">베스트</span></div><div class="pcard-body"><h3>산양삼 5-6년근 10뿌리</h3><p>지리산 자연재배 · 무농약 인증</p><div class="price-row"><span class="price-sale">49,800원</span><span class="price-orig">60,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-product-detail.png" alt=""/><span class="pcard-badge" style="background:#1d4ed8">인기</span></div><div class="pcard-body"><h3>산양삼 5-6년근 15뿌리</h3><p>지리산 자연재배 · 무농약 인증</p><div class="price-row"><span class="price-sale">67,800원</span><span class="price-orig">82,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+    <div class="pcard"><div class="pcard-thumb"><img src="./public/images/products/new-packaging.png" alt=""/></div><div class="pcard-body"><h3>산양삼 5-6년근 20뿌리</h3><p>지리산 자연재배 · 무농약 인증</p><div class="price-row"><span class="price-sale">89,800원</span><span class="price-orig">108,000원</span><span class="price-rate">17%↓</span></div></div><div class="pcard-foot"><button class="btn-os" onclick="go('cart')">장바구니</button><button class="btn-fs" onclick="go('detail')">상품보기</button></div></div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 상품상세 ═══ -->
+<div id="detail" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')">홈</a><a onclick="go('products')" class="on">상품</a><a onclick="go('about')">농장소개</a><a onclick="go('inquiry')">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button></div>
+</div></header>
+<section class="sec"><div class="wrap">
+  <p style="font-size:12px;color:var(--gray);margin-bottom:24px">홈 › 전체상품 › 산양삼 5-6년근</p>
+  <div class="detail-layout">
+    <div>
+      <div class="gallery-main"><img id="gMain" src="./public/images/products/new-product-comparison.png" alt="산양삼"/></div>
+      <div class="g-thumbs">
+        <div class="g-thumb on" onclick="switchImg(this,'./public/images/products/new-product-comparison.png')"><img src="./public/images/products/new-product-comparison.png"/></div>
+        <div class="g-thumb" onclick="switchImg(this,'./public/images/products/new-product-detail.png')"><img src="./public/images/products/new-product-detail.png"/></div>
+        <div class="g-thumb" onclick="switchImg(this,'./public/images/products/new-packaging.png')"><img src="./public/images/products/new-packaging.png"/></div>
+        <div class="g-thumb" onclick="switchImg(this,'./public/images/products/new-farm-forest.png')"><img src="./public/images/products/new-farm-forest.png"/></div>
+      </div>
+    </div>
+    <div class="detail-info">
+      <p class="eyebrow">지리산 산양삼 농장 · 직거래</p>
+      <h1>[지리산산양삼] 5-6년근 무농약 인증 농장 직거래</h1>
+      <span class="cert-tag">📜 한국임업진흥원 국내산·무농약 인증</span>
+      <div class="price-box">
+        <span class="big">49,800원</span><span class="orig">60,000원</span><span class="disc">17%</span>
+        <p class="ship">✓ 50,000원 이상 무료배송</p>
+      </div>
+      <div class="opt-row">
+        <label>수량 선택</label>
+        <div class="opt-btns">
+          <button class="opt-btn on" onclick="selOpt(this)">10뿌리 — 49,800원</button>
+          <button class="opt-btn" onclick="selOpt(this)">15뿌리 — 67,800원</button>
+          <button class="opt-btn" onclick="selOpt(this)">20뿌리 — 89,800원</button>
+        </div>
+      </div>
+      <div class="qty-wrap">
+        <label>수량</label>
+        <div class="qty-ctrl"><button>−</button><span>1</span><button>+</button></div>
+      </div>
+      <table class="spec-tbl">
+        <tr><th>원산지</th><td>국내산 (경남 하동, 지리산)</td></tr>
+        <tr><th>재배기간</th><td>5~6년 자연재배</td></tr>
+        <tr><th>인증</th><td>한국임업진흥원 국내산·무농약 합격증</td></tr>
+        <tr><th>배송</th><td>평일 14시 이전 결제확인 시 당일 발송</td></tr>
+        <tr><th>배송비</th><td>3,000원 (50,000원 이상 무료)</td></tr>
+      </table>
+      <div class="action-grid">
+        <button class="btn-cart-big" onclick="go('cart')">🛒 장바구니</button>
+        <button class="btn-buy-big" onclick="go('checkout')">바로 구매</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn on" id="tb-desc" onclick="switchTab('desc')">상품 정보</button>
+    <button class="tab-btn" id="tb-ship" onclick="switchTab('ship')">배송 안내</button>
+    <button class="tab-btn" id="tb-ret" onclick="switchTab('ret')">교환·환불</button>
+    <button class="tab-btn" id="tb-rev" onclick="switchTab('rev')">구매 후기</button>
+  </div>
+  <div class="tab-pane on" id="tp-desc">
+    <div class="desc-imgs">
+      <img src="./public/images/products/new-brand-100pct.png" alt=""/>
+      <img src="./public/images/products/new-farmer-intro.png" alt=""/>
+      <img src="./public/images/products/new-farm-forest.png" alt=""/>
+      <img src="./public/images/products/new-farm-plants.png" alt=""/>
+      <img src="./public/images/products/new-product-comparison.png" alt=""/>
+      <img src="./public/images/products/new-live-proof.png" alt=""/>
+      <img src="./public/images/products/new-product-detail.png" alt=""/>
+      <img src="./public/images/products/new-packaging.png" alt=""/>
+      <img src="./public/images/products/new-education.png" alt=""/>
+      <img src="./public/images/products/new-certification.png" alt=""/>
+      <img src="./public/images/products/new-recommend.png" alt=""/>
+      <img src="./public/images/products/new-effects.png" alt=""/>
+      <img src="./public/images/products/new-how-to-use.png" alt=""/>
+      <img src="./public/images/products/new-cautions.png" alt=""/>
+    </div>
+  </div>
+  <div class="tab-pane" id="tp-ship">
+    <table class="spec-tbl" style="margin-top:20px;max-width:600px">
+      <tr><th>배송 방법</th><td>CJ대한통운 / 롯데택배</td></tr>
+      <tr><th>배송비</th><td>3,000원 (50,000원 이상 무료)</td></tr>
+      <tr><th>배송 기간</th><td>결제 확인 후 1~3일 이내</td></tr>
+      <tr><th>출고 기준</th><td>평일 14시 이전 결제확인 시 당일 발송</td></tr>
+    </table>
+  </div>
+  <div class="tab-pane" id="tp-ret">
+    <table class="spec-tbl" style="margin-top:20px;max-width:600px">
+      <tr><th>단순변심</th><td>수령 후 7일 이내 (반품 배송비 고객 부담)</td></tr>
+      <tr><th>파손·불량</th><td>수령 즉시 사진 촬영 후 문의 → 판매자 부담</td></tr>
+      <tr><th>반품 불가</th><td>섭취·훼손 후 반품 불가</td></tr>
+    </table>
+  </div>
+  <div class="tab-pane" id="tp-rev">
+    <div style="padding:20px 0">
+      <div class="review-card"><div class="review-meta"><span style="font-weight:700">이O민</span><span class="stars">★★★★★</span><span style="font-size:12px;color:var(--gray)">2026.01.15</span></div><p style="font-size:14px;line-height:1.7">처음 구매했는데 정말 신선하게 왔어요. 크기도 균일하고 포장도 꼼꼼하게 해주셨더라고요. 매일 아침 먹고 있는데 활력이 생기는 느낌입니다!</p></div>
+      <div class="review-card"><div class="review-meta"><span style="font-weight:700">박O성</span><span class="stars">★★★★★</span><span style="font-size:12px;color:var(--gray)">2026.02.03</span></div><p style="font-size:14px;line-height:1.7">무농약 인증서까지 동봉해 주시더라구요. 부모님 선물용으로 구매했는데 너무 좋아하십니다.</p></div>
+      <div class="review-card"><div class="review-meta"><span style="font-weight:700">최O영</span><span class="stars">★★★★★</span><span style="font-size:12px;color:var(--gray)">2026.02.18</span></div><p style="font-size:14px;line-height:1.7">쿠팡에서 사다가 직거래몰로 왔어요. 가격도 더 저렴하고 신선도도 같아요. 앞으로도 여기서 구매할 것 같습니다.</p></div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 농장소개 ═══ -->
+<div id="about" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')">홈</a><a onclick="go('products')">상품</a><a onclick="go('about')" class="on">농장소개</a><a onclick="go('inquiry')">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button></div>
+</div></header>
+<div class="about-hero"><img src="./public/images/products/farm-field.jpg" alt=""/><div class="about-hero-txt"><h1>농장 소개</h1><p>지리산 해발 800m, 이금팔 농장주가 직접 키우는 산양삼</p></div></div>
+<section class="sec intro-strip"><div class="wrap">
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p class="eyebrow">Farm Owner</p>
+      <h2>안녕하세요,<br/><em>이금팔</em>입니다.</h2>
+      <p>지리산의 청정한 자연 속에서 산양삼을 재배한 지 10여 년이 넘었습니다. 처음 시작할 때의 마음 그대로, 정직하고 정성스럽게 키우고 있습니다.</p>
+      <p>화학 비료와 농약을 전혀 사용하지 않고, 한국임업진흥원 국내산·무농약 합격증을 보유한 공인된 농장입니다.</p>
+      <p class="sig">— 농장주 이금팔 드림</p>
+    </div>
+    <div class="intro-img"><img src="./public/images/products/new-farmer-intro.png" alt="이금팔"/></div>
+  </div>
+</div></section>
+<section class="sec" style="background:var(--light)"><div class="wrap">
+  <div class="sec-tit"><p class="tag">Certification</p><h2>인증 현황</h2><div class="bar"></div></div>
+  <div class="cert-grid">
+    <div class="cert-img-box"><img src="./public/images/products/new-certification.png" alt="합격증"/></div>
+    <div>
+      <div style="border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)"><img src="./public/images/products/new-education.png" alt="교육"/></div>
+      <div class="cert-list">
+        <div class="cert-item"><div class="cert-ico">📜</div><div><h4>무농약 농산물 인증</h4><p>한국임업진흥원 · 화학 농약 미사용 공식 인증</p></div></div>
+        <div class="cert-item"><div class="cert-ico">🏡</div><div><h4>국내산 산양삼 인증</h4><p>한국임업진흥원 · 100% 국내 지리산 재배</p></div></div>
+        <div class="cert-item"><div class="cert-ico">🎓</div><div><h4>재배기술 교육 이수</h4><p>남원교육센터 · 전문 재배기술과정 수료</p></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<section class="sec" style="background:#fff"><div class="wrap">
+  <div class="sec-tit"><p class="tag">Farm</p><h2>산양삼이 자라는 곳</h2><div class="bar"></div></div>
+  <div class="farm-photo-grid">
+    <div class="farm-photo"><img src="./public/images/products/new-farm-forest.png" alt=""/><p>지리산 해발 800m 자생지</p></div>
+    <div class="farm-photo"><img src="./public/images/products/new-farm-plants.png" alt=""/><p>자연 숲속 재배 환경</p></div>
+    <div class="farm-photo"><img src="./public/images/products/new-live-proof.png" alt=""/><p>2025년 5월 현장 사진</p></div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 장바구니 ═══ -->
+<div id="cart" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')">홈</a><a onclick="go('products')">상품</a><a onclick="go('about')">농장소개</a><a onclick="go('inquiry')">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button></div>
+</div></header>
+<section class="sec"><div class="wrap">
+  <h1 style="font-size:24px;font-weight:900;margin-bottom:24px">장바구니</h1>
+  <div class="cart-layout">
+    <div>
+      <div class="cart-item">
+        <img class="cart-img" src="./public/images/products/new-product-comparison.png" alt=""/>
+        <div style="flex:1"><h4 style="font-size:15px;font-weight:700;margin-bottom:4px">산양삼 5-6년근 10뿌리</h4><p style="font-size:13px;color:var(--gray);margin-bottom:8px">국내산 · 무농약 인증</p><div class="qty-ctrl" style="width:fit-content"><button>−</button><span>1</span><button>+</button></div></div>
+        <div style="text-align:right;flex-shrink:0"><p class="cart-price">49,800원</p><button style="background:none;border:none;color:var(--gray);font-size:12px;margin-top:8px">삭제</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="summary-box">
+        <h3>주문 요약</h3>
+        <div class="s-row"><span>상품 금액</span><span>49,800원</span></div>
+        <div class="s-row"><span>배송비</span><span style="color:var(--g2)">무료</span></div>
+        <div class="ship-bar">🎉 무료배송 조건 충족!</div>
+        <div class="s-total"><span>최종 결제</span><span style="color:var(--g2)">49,800원</span></div>
+        <button class="btn-checkout" onclick="go('checkout')">주문/결제 진행 →</button>
+        <button style="width:100%;background:none;border:1.5px solid var(--border);color:#374151;padding:12px;border-radius:8px;font-size:14px;font-weight:600;margin-top:8px;border-style:solid" onclick="go('products')">쇼핑 계속하기</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 주문/결제 ═══ -->
+<div id="checkout" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b></div>
+  <p style="font-size:14px;color:var(--gray)">주문/결제</p>
+  <button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button>
+</div></header>
+<section class="sec"><div class="wrap">
+  <h1 style="font-size:24px;font-weight:900;margin-bottom:28px">주문 / 결제</h1>
+  <div class="checkout-layout">
+    <div>
+      <div class="form-card">
+        <h3>주문자 정보</h3>
+        <div class="f-row"><div class="f-grp"><label>이름</label><input type="text" placeholder="홍길동"/></div><div class="f-grp"><label>휴대폰</label><input type="tel" placeholder="010-0000-0000"/></div></div>
+        <div class="f-grp"><label>이메일</label><input type="email" placeholder="example@email.com"/></div>
+      </div>
+      <div class="form-card">
+        <h3>배송지 정보</h3>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><input type="checkbox" checked/><label style="font-size:14px">주문자 정보와 동일</label></div>
+        <div class="f-row"><div class="f-grp"><label>받는 분</label><input type="text" value="홍길동"/></div><div class="f-grp"><label>휴대폰</label><input type="tel" value="010-0000-0000"/></div></div>
+        <div style="display:flex;gap:8px;margin-bottom:10px"><input type="text" placeholder="우편번호" style="width:130px;border:1px solid var(--border);border-radius:8px;padding:10px"/><button style="background:var(--g2);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px">주소 검색</button></div>
+        <div class="f-grp"><input type="text" placeholder="기본 주소"/></div>
+        <div class="f-grp"><input type="text" placeholder="상세 주소"/></div>
+        <div class="f-grp"><label>배송 메모</label><select><option>문 앞에 놓아주세요</option><option>경비실에 맡겨주세요</option><option>직접 입력</option></select></div>
+      </div>
+      <div class="form-card">
+        <h3>결제 수단</h3>
+        <div class="pay-grid">
+          <button class="pay-btn on" data-m="bank" onclick="selPay(this)">🏦 무통장입금</button>
+          <button class="pay-btn" data-m="kakao" onclick="selPay(this)">💛 카카오페이</button>
+          <button class="pay-btn" data-m="toss" onclick="selPay(this)">💙 토스페이</button>
+        </div>
+        <div class="bank-box" id="bank-info">
+          <h4>무통장 입금 계좌 안내</h4>
+          <p>은행: 국민은행</p>
+          <p>계좌번호: <strong>123456-78-901234</strong></p>
+          <p>예금주: 이금팔</p>
+          <p style="font-size:12px;color:#dc2626;margin-top:8px">⏰ 주문 후 24시간 이내 미입금 시 자동 취소됩니다.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="summary-box" style="position:sticky;top:120px">
+        <h3 style="padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:16px">주문 상품</h3>
+        <div style="display:flex;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+          <img src="./public/images/products/new-product-comparison.png" style="width:64px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0"/>
+          <div><p style="font-size:14px;font-weight:600">산양삼 5-6년근 10뿌리</p><p style="font-size:13px;color:var(--gray)">수량: 1개</p><p style="font-size:16px;font-weight:700;color:var(--g2)">49,800원</p></div>
+        </div>
+        <div class="s-row"><span style="font-size:14px">상품 금액</span><span>49,800원</span></div>
+        <div class="s-row"><span style="font-size:14px">배송비</span><span style="color:var(--g2)">무료</span></div>
+        <div class="s-total"><span>최종 결제</span><span style="color:var(--g2)">49,800원</span></div>
+        <button class="btn-checkout" onclick="go('success')" style="margin-top:20px">주문 완료하기 →</button>
+        <p style="font-size:12px;color:var(--gray);text-align:center;margin-top:8px">결제 완료 후 주문 확정됩니다.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 주문완료 ═══ -->
+<div id="success" class="pg">
+<header class="hd"><div class="wrap hd-in"><div class="logo"><b>지리산 산양삼</b></div></div></header>
+<section class="sec"><div class="wrap">
+  <div class="success-wrap">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2>주문이 완료되었습니다!</h2>
+      <p style="font-size:15px;color:var(--gray);margin-bottom:4px">감사합니다. 아래 계좌로 24시간 이내 입금해 주세요.</p>
+      <div class="order-num">SYS-20260225-0001</div>
+      <div class="deadline">⏰ 입금 기한: <strong>2026년 02월 26일 14:30</strong> 까지<br/>기한 내 미입금 시 주문이 자동 취소됩니다.</div>
+      <div class="bank-result">
+        <h4>💳 무통장 입금 안내</h4>
+        <div class="br-row"><span>은행</span><span>국민은행</span></div>
+        <div class="br-row"><span>계좌번호</span><span style="font-weight:700">123456-78-901234</span></div>
+        <div class="br-row"><span>예금주</span><span>이금팔</span></div>
+        <div class="br-row"><span>입금자명</span><span>홍길동</span></div>
+        <div class="br-total"><span>입금 금액</span><span>49,800원</span></div>
+      </div>
+      <p style="font-size:13px;color:var(--gray);margin-bottom:20px">입금 확인 후 당일 또는 익일 발송됩니다.<br/>문의: 010-7129-3244</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button class="btn-o" onclick="go('home')" style="border-radius:8px;text-align:center;cursor:pointer">홈으로</button>
+        <button class="btn-p" onclick="go('products')" style="border-radius:8px;text-align:center;cursor:pointer;border:none">쇼핑 계속</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 고객문의 ═══ -->
+<div id="inquiry" class="pg">
+<header class="hd"><div class="wrap hd-in">
+  <div class="logo"><b>지리산 산양삼</b><small>Jirisan Wild Ginseng · Direct Mall</small></div>
+  <nav class="gnb"><a onclick="go('home')">홈</a><a onclick="go('products')">상품</a><a onclick="go('about')">농장소개</a><a onclick="go('inquiry')" class="on">고객문의</a></nav>
+  <div class="hd-right"><button class="btn-login" onclick="go('login')">로그인</button><button class="btn-cart" onclick="go('cart')">🛒 <span class="badge">1</span></button></div>
+</div></header>
+<section class="sec"><div class="wrap">
+  <div class="inquiry-header">
+    <h2 style="font-size:24px;font-weight:900;margin-bottom:8px">고객 문의</h2>
+    <p style="color:var(--gray)">상품, 배송, 주문에 관한 모든 문의를 남겨주세요.<br/>📞 010-7129-3244 | 평일 09:00~18:00</p>
+  </div>
+  <div class="inquiry-list">
+    <div class="iq-item"><span class="iq-badge iq-answered">답변완료</span><div style="flex:1"><p style="font-size:14px;font-weight:600">보관 방법이 궁금합니다</p><p style="font-size:12px;color:var(--gray)">이O주 · 2026.02.20</p></div></div>
+    <div class="iq-item"><span class="iq-badge iq-answered">답변완료</span><div style="flex:1"><p style="font-size:14px;font-weight:600">대량 구매 시 할인이 되나요?</p><p style="font-size:12px;color:var(--gray)">김O수 · 2026.02.18</p></div></div>
+    <div class="iq-item"><span class="iq-badge iq-pending">미답변</span><div style="flex:1"><p style="font-size:14px;font-weight:600">제주도 배송 가능한가요?</p><p style="font-size:12px;color:var(--gray)">박O진 · 2026.02.24</p></div></div>
+  </div>
+  <div class="iq-new">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:18px">문의 작성</h3>
+    <div class="f-grp"><label>제목</label><input type="text" placeholder="문의 제목을 입력하세요"/></div>
+    <div class="f-grp"><label>내용</label><textarea style="width:100%;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:14px;min-height:120px;resize:vertical;font-family:inherit;outline:none" placeholder="문의 내용을 자세히 작성해 주세요."></textarea></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><input type="checkbox"/><label style="font-size:14px">비밀글로 작성</label></div>
+    <button class="btn-p">문의 등록</button>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 로그인 ═══ -->
+<div id="login" class="pg">
+<header class="hd"><div class="wrap hd-in"><div class="logo"><b>지리산 산양삼</b></div></div></header>
+<section class="sec"><div class="wrap">
+  <div class="login-wrap">
+    <div class="login-card">
+      <h2>로그인</h2>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:24px">회원 로그인 후 주문 내역 확인, 재구매가 편리합니다.</p>
+      <input class="inp" type="email" placeholder="이메일"/>
+      <input class="inp" type="password" placeholder="비밀번호"/>
+      <button class="btn-login-btn" style="margin-bottom:12px">로그인</button>
+      <div style="display:flex;justify-content:center;gap:16px;font-size:13px;color:var(--gray);margin-bottom:4px">
+        <a>아이디 찾기</a>·<a>비밀번호 찾기</a>·<a style="color:var(--g2);font-weight:600">회원가입</a>
+      </div>
+      <div class="or-line"><span>또는 간편 로그인</span></div>
+      <div class="sns-row">
+        <button class="btn-kakao">💛 카카오 로그인</button>
+        <button class="btn-naver">네이버 로그인</button>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);text-align:center">
+        <p style="font-size:13px;color:var(--gray)">회원 아니어도 <a onclick="go('checkout')" style="color:var(--g2);font-weight:600;cursor:pointer">비회원 주문</a> 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ═══ 관리자 ═══ -->
+<div id="admin" class="pg">
+<div style="background:#111;color:#fff;padding:8px 20px;display:flex;justify-content:space-between;align-items:center">
+  <span style="font-size:13px;font-weight:700">🌿 지리산 산양삼 — 관리자</span>
+  <span style="font-size:12px;color:#aaa">admin@sanyangsam.com</span>
+</div>
+<div class="admin-wrap">
+  <div class="sidebar">
+    <div class="sidebar-logo"><span>산양삼 관리자</span><small>Admin Dashboard</small></div>
+    <div class="s-nav-item on"><span>📊</span>대시보드</div>
+    <div class="s-nav-item"><span>📋</span>주문 목록</div>
+    <div class="s-nav-item"><span>💰</span>입금 확인<span class="s-badge">3</span></div>
+    <div class="s-nav-item"><span>🚚</span>배송 처리<span class="s-badge">5</span></div>
+    <div class="s-nav-item"><span>📦</span>상품 관리</div>
+  </div>
+  <div class="admin-main">
+    <div class="admin-hd"><h1>대시보드</h1><p>2026년 02월 25일</p></div>
+    <div class="alert-box"><span style="font-size:22px">🚨</span><div><strong>무통장 입금 대기 3건</strong> — 입금 기한이 다가오고 있습니다</div><button style="margin-left:auto;background:#dc2626;color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:700">확인하기</button></div>
+    <div class="stat-grid">
+      <div class="stat-card"><p>오늘 주문</p><h3>7건</h3><p class="tr">↑ 어제 대비 +2</p></div>
+      <div class="stat-card"><p>입금 대기</p><h3 style="color:#b45309">3건</h3><p class="tr red">확인 필요</p></div>
+      <div class="stat-card"><p>배송 대기</p><h3 style="color:#1d4ed8">5건</h3><p class="tr">처리 중</p></div>
+      <div class="stat-card"><p>이번 달 매출</p><h3>142만원</h3><p class="tr">↑ 전월 +18%</p></div>
+    </div>
+    <div class="tbl-card">
+      <div class="tbl-hd"><h3>최근 주문</h3><button style="background:var(--g2);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600">전체 보기</button></div>
+      <table class="a-tbl">
+        <thead><tr><th>주문번호</th><th>주문자</th><th>상품</th><th>금액</th><th>결제</th><th>상태</th><th>처리</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:monospace;font-size:11px">SYS-20260225-0007</td><td>홍O동</td><td>10뿌리×1</td><td style="font-weight:700">49,800원</td><td>무통장</td><td><span class="sb sb-wait">입금대기</span></td><td><button class="btn-cfm">입금확인</button></td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">SYS-20260225-0006</td><td>김O수</td><td>15뿌리×1</td><td style="font-weight:700">67,800원</td><td>카카오페이</td><td><span class="sb sb-ok">결제완료</span></td><td><button class="btn-shp">배송처리</button></td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">SYS-20260225-0005</td><td>이O진</td><td>20뿌리×2</td><td style="font-weight:700">179,600원</td><td>토스페이</td><td><span class="sb sb-ok">결제완료</span></td><td><button class="btn-shp">배송처리</button></td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">SYS-20260225-0004</td><td>박O민</td><td>10뿌리×1</td><td style="font-weight:700">49,800원</td><td>무통장</td><td><span class="sb sb-wait">입금대기</span></td><td><button class="btn-cfm">입금확인</button></td></tr>
+          <tr><td style="font-family:monospace;font-size:11px">SYS-20260225-0003</td><td>최O영</td><td>15뿌리×1</td><td style="font-weight:700">67,800원</td><td>카카오페이</td><td><span class="sb sb-ship">배송중</span></td><td style="font-size:11px;color:var(--gray)">CJ 123456789</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-green: #2d6a4f;
+  --brand-gold: #b5831f;
+  --brand-cream: #faf8f0;
+}
+
+html {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* 모바일 하단 네비게이션 여백 */
+.pb-mobile-nav {
+  padding-bottom: 80px;
+}
+
+@media (min-width: 768px) {
+  .pb-mobile-nav {
+    padding-bottom: 0;
+  }
+}
+
+/* 스크롤바 커스텀 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d6a4f;
+  border-radius: 3px;
+}
+
+/* 버튼 스타일 */
+.btn-primary {
+  @apply bg-brand-green text-white font-medium py-3 px-6 rounded-lg hover:bg-green-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-outline {
+  @apply border-2 border-brand-green text-brand-green font-medium py-3 px-6 rounded-lg hover:bg-brand-green hover:text-white transition-colors duration-200;
+}
+
+/* 입력 필드 */
+.input-field {
+  @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent;
+}
+
+/* 카드 */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100;
+}
