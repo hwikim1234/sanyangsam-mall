@@ -91,8 +91,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {[
               { img: '/images/products/new-product-comparison.png', badge: '베스트', badgeColor: '#a67c2e', name: '산양삼 5-6년근 10뿌리', sale: '49,800원', orig: '60,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-10ppuri' },
-              { img: '/images/products/new-product-detail.png', badge: '인기', badgeColor: '#1d4ed8', name: '산양삼 5-6년근 15뿌리', sale: '67,800원', orig: '82,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-15ppuri' },
-              { img: '/images/products/new-packaging.png', badge: '', badgeColor: '', name: '산양삼 5-6년근 20뿌리', sale: '89,800원', orig: '108,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-20ppuri' },
+              { img: '/images/products/new-product-detail.png', badge: '인기', badgeColor: '#1d4ed8', name: '산양삼 5-6년근 15뿌리', sale: '67,800원', orig: '82,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-10ppuri' },
+              { img: '/images/products/new-packaging.png', badge: '', badgeColor: '', name: '산양삼 5-6년근 20뿌리', sale: '89,800원', orig: '108,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-10ppuri' },
             ].map((p) => (
               <div
                 key={p.name}
@@ -121,7 +121,7 @@ export default function HomePage() {
                 </div>
                 <div className="grid grid-cols-2 gap-2 px-4 pb-3" style={{ borderTop: '1px solid #e5e7eb', paddingTop: '12px' }}>
                   <Link
-                    href="/cart"
+                    href={`/products/${p.slug}`}
                     className="text-center py-2.5 rounded-lg text-[13px] font-bold"
                     style={{ border: '1.5px solid #2d6a4f', background: '#fff', color: '#2d6a4f' }}
                   >
