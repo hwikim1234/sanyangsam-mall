@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { formatPrice } from '@/lib/utils'
 import AddToCartSection from './AddToCartSection'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 interface Props {
@@ -42,21 +43,20 @@ export default async function ProductPage({ params }: Props) {
       <div className="md:grid md:grid-cols-2 md:gap-12">
         {/* 이미지 갤러리 */}
         <div className="mb-6 md:mb-0">
-          <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden mb-3">
-            <img
+          <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden mb-3 relative">
+            <Image
               src={displayImages[0]}
               alt={product.name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/500x500/dcfce7/2d6a4f?text=산양삼'
-              }}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
           {displayImages.length > 1 && (
             <div className="flex gap-2 overflow-x-auto">
               {displayImages.slice(1).map((url, i) => (
-                <div key={i} className="w-20 h-20 shrink-0 bg-gray-100 rounded-lg overflow-hidden">
-                  <img src={url} alt={`${product.name} ${i + 2}`} className="w-full h-full object-cover" />
+                <div key={i} className="w-20 h-20 shrink-0 bg-gray-100 rounded-lg overflow-hidden relative">
+                  <Image src={url} alt={`${product.name} ${i + 2}`} fill className="object-cover" sizes="80px" />
                 </div>
               ))}
             </div>
