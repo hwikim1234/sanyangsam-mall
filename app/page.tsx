@@ -2,174 +2,265 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { CheckCircle, Leaf, Award, Truck } from 'lucide-react'
 
 export default function HomePage() {
   return (
-    <div className="bg-brand-cream">
-      <section className="relative bg-gradient-to-b from-green-900 to-green-700 text-white overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 py-16 md:py-24">
-          <div className="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+    <div style={{ background: '#f6f5f0' }}>
+
+      {/* ═══ 히어로 ═══ */}
+      <section className="relative overflow-hidden h-[400px] md:h-[560px]" style={{ background: '#1b4332' }}>
+        <Image
+          src="/images/products/product-roots-1.jpg"
+          alt="지리산 산양삼"
+          fill
+          className="object-cover object-center"
+          style={{ opacity: 0.7 }}
+          priority
+        />
+        <div className="absolute inset-0 flex items-center px-6 md:px-20">
+          <div>
+            <p className="text-xs font-bold tracking-[3px] uppercase mb-3" style={{ color: '#a67c2e' }}>
+              Jirisan · Altitude 800m · 5–6 Years Grown
+            </p>
+            <h1
+              className="font-black leading-tight text-white text-[28px] sm:text-[36px] md:text-[54px]"
+              style={{ letterSpacing: '-1px', textShadow: '0 2px 20px rgba(0,0,0,.3)' }}
+            >
+              지리산 해발 800m<br />산양삼 직거래
+            </h1>
+            <p className="text-sm md:text-base mt-4 leading-relaxed" style={{ color: 'rgba(255,255,255,.85)' }}>
+              화학 농약 무사용 · 한국임업진흥원 국내산·무농약 인증<br />
+              농장주 이금팔이 직접 키우고 직접 보내드립니다
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                href="/products"
+                className="font-bold text-white rounded-lg px-7 py-3 text-sm md:text-base"
+                style={{ background: '#2d6a4f' }}
+              >
+                지금 주문하기
+              </Link>
+              <Link
+                href="/about"
+                className="font-bold rounded-lg px-7 py-3 text-sm md:text-base"
+                style={{ border: '2px solid #fff', color: '#fff', background: 'transparent' }}
+              >
+                농장 소개
+              </Link>
+            </div>
+          </div>
+        </div>
+        {/* 히어로 배지 (데스크톱) */}
+        <div
+          className="hidden md:block absolute right-20 top-1/2 -translate-y-1/2 text-white text-center"
+          style={{
+            background: 'rgba(0,0,0,.6)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255,255,255,.2)',
+            borderRadius: '16px',
+            padding: '20px 24px',
+            minWidth: '180px',
+          }}
+        >
+          <div className="font-black leading-none" style={{ fontSize: '42px', color: '#a67c2e' }}>118배</div>
+          <div className="mt-1 text-sm" style={{ opacity: 0.8 }}>인삼 대비 진세노사이드</div>
+        </div>
+      </section>
+
+      {/* ═══ 트러스트 바 ═══ */}
+      <div className="py-3.5 text-white" style={{ background: '#2d6a4f' }}>
+        <div className="max-w-site mx-auto px-5">
+          <div className="flex justify-center flex-wrap gap-6 md:gap-10">
+            {['📜 한국임업진흥원 인증', '🚫 100% 무농약', '🏔️ 지리산 해발 800m', '📦 농가 직접 발송', '⭐ 1,000명+ 단골 고객'].map((item) => (
+              <div key={item} className="text-sm font-semibold">{item}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ 대표 상품 ═══ */}
+      <section className="py-16">
+        <div className="max-w-site mx-auto px-5">
+          {/* 섹션 타이틀 */}
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold tracking-[2px] uppercase mb-1.5" style={{ color: '#a67c2e' }}>Best Products</p>
+            <h2 className="text-[28px] font-black" style={{ color: '#111827' }}>대표 상품</h2>
+            <div className="w-9 h-[3px] rounded-sm mx-auto mt-2.5" style={{ background: '#a67c2e' }} />
+          </div>
+          {/* 상품 카드 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {[
+              { img: '/images/products/new-product-comparison.png', badge: '베스트', badgeColor: '#a67c2e', name: '산양삼 5-6년근 10뿌리', sale: '49,800원', orig: '60,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-10ppuri' },
+              { img: '/images/products/new-product-detail.png', badge: '인기', badgeColor: '#1d4ed8', name: '산양삼 5-6년근 15뿌리', sale: '67,800원', orig: '82,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-15ppuri' },
+              { img: '/images/products/new-packaging.png', badge: '', badgeColor: '', name: '산양삼 5-6년근 20뿌리', sale: '89,800원', orig: '108,000원', rate: '17%↓', slug: 'sanyangsam-5-6nyeon-20ppuri' },
+            ].map((p) => (
+              <div
+                key={p.name}
+                className="bg-white overflow-hidden transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
+                style={{ borderRadius: '12px', border: '1px solid #e5e7eb' }}
+              >
+                <div className="relative h-[230px] overflow-hidden">
+                  <Image src={p.img} alt={p.name} fill className="object-cover transition-transform duration-300 hover:scale-[1.04]" />
+                  {p.badge && (
+                    <span
+                      className="absolute top-2.5 left-2.5 text-white text-[11px] font-bold px-2.5 py-1 rounded-full"
+                      style={{ background: p.badgeColor }}
+                    >
+                      {p.badge}
+                    </span>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="text-[15px] font-bold mb-1">{p.name}</h3>
+                  <p className="text-xs mb-3" style={{ color: '#6b7280' }}>지리산 자연재배 · 무농약 인증 · 직송</p>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[22px] font-black" style={{ color: '#2d6a4f' }}>{p.sale}</span>
+                    <span className="text-sm line-through" style={{ color: '#9ca3af' }}>{p.orig}</span>
+                    <span className="text-sm font-bold text-red-500">{p.rate}</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 px-4 pb-3" style={{ borderTop: '1px solid #e5e7eb', paddingTop: '12px' }}>
+                  <Link
+                    href="/cart"
+                    className="text-center py-2.5 rounded-lg text-[13px] font-bold"
+                    style={{ border: '1.5px solid #2d6a4f', background: '#fff', color: '#2d6a4f' }}
+                  >
+                    장바구니
+                  </Link>
+                  <Link
+                    href={`/products/${p.slug}`}
+                    className="text-center py-2.5 rounded-lg text-[13px] font-bold text-white"
+                    style={{ background: '#2d6a4f' }}
+                  >
+                    상품보기
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ 이벤트 배너 ═══ */}
+      <div className="py-11 px-5 text-center text-white" style={{ background: '#1b4332' }}>
+        <div className="max-w-site mx-auto">
+          <p className="text-xs font-bold tracking-[2px] uppercase mb-2.5" style={{ color: '#a67c2e' }}>LIMITED EVENT</p>
+          <h2 className="text-[28px] font-black mb-5">너무 감사해서 또 이벤트합니다!</h2>
+          <div
+            className="inline-flex flex-wrap justify-center gap-6 mb-6 px-8 py-4"
+            style={{ background: 'rgba(255,255,255,.1)', borderRadius: '12px' }}
+          >
+            {[
+              { qty: '10뿌리 주문', bonus: '2뿌리' },
+              { qty: '15뿌리 주문', bonus: '3뿌리' },
+              { qty: '20뿌리 주문', bonus: '4뿌리' },
+            ].map((item) => (
+              <span key={item.qty} className="text-sm font-semibold">
+                {item.qty} → <b className="text-lg" style={{ color: '#a67c2e' }}>{item.bonus}</b> 추가
+              </span>
+            ))}
+          </div>
+          <br />
+          <Link
+            href="/products"
+            className="inline-block font-bold text-white text-base px-9 py-4 rounded-lg mt-2"
+            style={{ background: '#2d6a4f' }}
+          >
+            지금 주문하기 →
+          </Link>
+        </div>
+      </div>
+
+      {/* ═══ 농장 소개 ═══ */}
+      <section className="bg-white py-16">
+        <div className="max-w-site mx-auto px-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5 text-sm mb-6">
-                <Leaf className="w-4 h-4" />
-                <span>100% 무농약 · 국내산</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-black leading-tight mb-4">
-                지리산 해발 800m<br />
-                <span className="text-yellow-300">자연 그대로</span><br />
-                산양삼
-              </h1>
-              <p className="text-green-100 text-lg mb-8 leading-relaxed">
-                5~6년 정성껏 재배한 산양삼을<br />
-                농가에서 직접 보내드립니다
+              <p className="text-xs font-bold tracking-[2px] uppercase mb-2" style={{ color: '#a67c2e' }}>Farm Story</p>
+              <h2 className="text-[30px] font-black leading-snug mb-5">
+                안녕하세요,<br />농장주 <em className="not-italic" style={{ color: '#2d6a4f' }}>이금팔</em>입니다.
+              </h2>
+              <p className="text-[15px] leading-[1.9] mb-2.5" style={{ color: '#4b5563' }}>
+                지리산 해발 800m의 청정 자연에서 산양삼을 재배한 지 10여 년이 넘었습니다. 처음 시작할 때의 마음 그대로 정직하고 정성스럽게 키우고 있습니다.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <p className="text-[15px] leading-[1.9] mb-2.5" style={{ color: '#4b5563' }}>
+                화학 농약과 비료를 전혀 사용하지 않고, 한국임업진흥원 국내산·무농약 합격증을 보유한 공인된 농장입니다.
+              </p>
+              <p className="text-[15px] font-bold mt-4" style={{ color: '#111827' }}>— 지리산 산양삼 농장주 이금팔 드림</p>
+              <div className="mt-6">
                 <Link
-                  href="/products/sanyangsam-5-6nyeon-10ppuri"
-                  className="bg-yellow-400 text-gray-900 font-bold py-4 px-8 rounded-xl text-center text-lg hover:bg-yellow-300 transition-colors"
+                  href="/about"
+                  className="font-bold text-white text-[15px] px-7 py-3 rounded-lg inline-block"
+                  style={{ background: '#2d6a4f' }}
                 >
-                  지금 구매하기
-                </Link>
-                <Link
-                  href="#about"
-                  className="border-2 border-white/50 text-white font-medium py-4 px-8 rounded-xl text-center hover:bg-white/10 transition-colors"
-                >
-                  더 알아보기
+                  농장 자세히 보기
                 </Link>
               </div>
             </div>
-            <div className="hidden md:block">
-              <div className="rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
-                <Image
-                  src="/images/products/product-hero.jpg"
-                  alt="지리산 산양삼 대표 이미지"
-                  width={720}
-                  height={540}
-                  className="w-full h-[360px] object-cover"
-                  priority
-                />
-              </div>
+            <div className="rounded-[20px] overflow-hidden" style={{ boxShadow: '0 4px 20px rgba(0,0,0,.08)' }}>
+              <Image
+                src="/images/products/new-farmer-intro.png"
+                alt="농장주 이금팔"
+                width={600}
+                height={500}
+                className="w-full h-auto block"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-10">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {/* ═══ 농장 특징 ═══ */}
+      <section className="py-16" style={{ background: '#f9fafb' }}>
+        <div className="max-w-site mx-auto px-5">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold tracking-[2px] uppercase mb-1.5" style={{ color: '#a67c2e' }}>Why Choose Us</p>
+            <h2 className="text-[28px] font-black" style={{ color: '#111827' }}>저희 농장의 특징</h2>
+            <div className="w-9 h-[3px] rounded-sm mx-auto mt-2.5" style={{ background: '#a67c2e' }} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { icon: '🏆', label: '한국임업진흥원', sub: '무농약 인증' },
-              { icon: '🌱', label: '5~6년 재배', sub: '자연 성장' },
-              { icon: '📦', label: '농가 직송', sub: '당일 발송' },
-              { icon: '⭐', label: '4.9점', sub: '고객 만족도' },
-            ].map((item) => (
-              <div key={item.label} className="text-center p-4">
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <div className="font-bold text-gray-800">{item.label}</div>
-                <div className="text-sm text-gray-500">{item.sub}</div>
+              { icon: '🏔️', title: '지리산 해발 800m', desc: '맑은 공기와 일교차가 큰 고지대에서 자연 그대로 재배합니다.' },
+              { icon: '🌱', title: '5~6년 자연 재배', desc: '최소 5년 이상 충분히 자란 후 선별하여 수확합니다.' },
+              { icon: '📜', title: '임업진흥원 인증', desc: '국내산·무농약 합격증을 보유한 공인 농장입니다.' },
+              { icon: '🚫', title: '100% 무농약', desc: '화학 농약 및 비료를 전혀 사용하지 않습니다.' },
+              { icon: '📦', title: '농장 직송', desc: '중간 유통 없이 농장에서 고객님께 직접 발송합니다.' },
+              { icon: '💯', title: '정직한 포장', desc: '고객님이 보시는 그대로 직접 선별·포장하여 발송합니다.' },
+            ].map((feat) => (
+              <div
+                key={feat.title}
+                className="bg-white text-center px-[22px] py-7"
+                style={{ borderRadius: '12px', border: '1px solid #e5e7eb' }}
+              >
+                <div className="text-[38px] mb-3">{feat.icon}</div>
+                <h3 className="text-[15px] font-bold mb-2">{feat.title}</h3>
+                <p className="text-[13px] leading-[1.7]" style={{ color: '#6b7280' }}>{feat.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="about" className="py-14">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-black text-center text-gray-800 mb-12">왜 지리산 산양삼인가요?</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: '🏔️',
-                title: '청정 자연 환경',
-                desc: '지리산 해발 800m, 맑은 공기와 깨끗한 토양에서 자란 산양삼입니다.',
-              },
-              {
-                icon: '📜',
-                title: '공식 인증 완료',
-                desc: '한국임업진흥원에서 국내산·무농약 합격증을 취득했습니다.',
-              },
-              {
-                icon: '🎁',
-                title: '선물로도 최고',
-                desc: '소중한 분들께 드리는 건강 선물로 정성껏 포장해 직접 발송합니다.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="card p-6 text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="font-bold text-xl text-gray-800 mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+      {/* ═══ 추천 대상 ═══ */}
+      <section className="bg-white py-16">
+        <div className="max-w-site mx-auto px-5">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold tracking-[2px] uppercase mb-1.5" style={{ color: '#a67c2e' }}>Recommended For</p>
+            <h2 className="text-[28px] font-black" style={{ color: '#111827' }}>이런 분들께 추천드려요</h2>
+            <div className="w-9 h-[3px] rounded-sm mx-auto mt-2.5" style={{ background: '#a67c2e' }} />
           </div>
-
-          <div className="mt-10 rounded-2xl overflow-hidden border border-gray-200">
+          <div className="max-w-[680px] mx-auto overflow-hidden rounded-xl" style={{ boxShadow: '0 4px 20px rgba(0,0,0,.08)' }}>
             <Image
-              src="/images/products/field-harvest.jpg"
-              alt="산양삼 재배지"
-              width={1200}
-              height={500}
-              className="w-full h-[280px] object-cover"
+              src="/images/products/new-recommend.png"
+              alt="추천"
+              width={680}
+              height={400}
+              className="w-full block"
             />
           </div>
         </div>
       </section>
 
-      <section className="bg-green-900 text-white py-14">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-black text-center mb-12">산양삼의 효능</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {['체력 증진', '면역력 강화', '노화 방지', '피로 회복', '항산화 작용', '피부 개선'].map((effect) => (
-              <div key={effect} className="flex items-center gap-3 bg-white/10 rounded-xl p-4">
-                <CheckCircle className="w-5 h-5 text-yellow-400 shrink-0" />
-                <span className="font-medium">{effect}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-green-300 text-xs text-center mt-6">* 본 제품은 식품이며 질병 치료를 목적으로 하지 않습니다.</p>
-        </div>
-      </section>
-
-      <section className="bg-yellow-50 py-14">
-        <div className="max-w-xl mx-auto px-4 text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-black text-gray-800 mb-2">특별 증정 이벤트</h2>
-            <p className="text-gray-600 mb-6">지금 주문 수량에 따라 추가 증정!</p>
-            <div className="space-y-3 mb-8 text-left">
-              {[
-                { qty: '10뿌리 주문', bonus: '2뿌리 추가 증정' },
-                { qty: '15뿌리 주문', bonus: '3뿌리 추가 증정' },
-                { qty: '20뿌리 주문', bonus: '4뿌리 추가 증정' },
-              ].map((item) => (
-                <div key={item.qty} className="flex justify-between items-center bg-green-50 rounded-lg px-4 py-3">
-                  <span className="font-medium text-gray-700">{item.qty}</span>
-                  <span className="font-bold text-brand-green">{item.bonus}</span>
-                </div>
-              ))}
-            </div>
-            <Link href="/products/sanyangsam-5-6nyeon-10ppuri" className="btn-primary w-full block text-center text-lg">
-              지금 주문하기 →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-10">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-            {[
-              { icon: <Truck className="w-6 h-6" />, text: '50,000원 이상 무료배송' },
-              { icon: <CheckCircle className="w-6 h-6" />, text: '당일 발송 (오전 11시 이전 주문)' },
-              { icon: <Award className="w-6 h-6" />, text: '신선 냉장 포장 보장' },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 text-gray-700 bg-gray-50 rounded-xl px-6 py-4">
-                <span className="text-brand-green">{item.icon}</span>
-                <span className="font-medium">{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
